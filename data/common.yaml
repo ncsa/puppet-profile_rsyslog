@@ -1,1 +1,137 @@
---- {}
+---
+profile_rsyslog::client::syslog_server: "syslog.security.ncsa.illinois.edu"
+profile_rsyslog::client::config_global:
+  WorkDirectory:
+    value: "/var/lib/rsyslog"
+  preserveFQDN:
+    value: "on"
+  maxMessageSize:
+    value: "64k"
+profile_rsyslog::client::config_modules:
+  omrelp: {}
+  imuxsock:
+    config:
+      SysSock.Name: "/run/systemd/journal/syslog"
+  imjournal:
+    config:
+      StateFile: "imjournal.state"
+      IgnorePreviousMessages: "off"
+      Ratelimit.Interval: 600
+      Ratelimit.Burst: 2000
+profile_rsyslog::client::config_actions:
+  00-ncsa-security-relp:
+    type: omrelp
+    config:
+      target: "syslog.security.ncsa.illinois.edu"
+      port: "1514"
+      queue.FileName: "syslog-security-buffer"
+      queue.SaveOnShutdown: "on"
+      queue.Type: "LinkedList"
+      queue.size: "1000000"
+      queue.maxdiskspace: "10000000000"
+      queue.syncqueuefiles: "on"
+      Action.ResumeInterval: "30"
+      Action.ResumeRetryCount: "-1"
+      timeout: "5"
+  01-all_logs_local:
+    type: "omfile"
+    facility: "*.info;mail.none;authpriv.none;cron.none"
+    config:
+      file: "/var/log/messages"
+  auth_logs:
+    type: "omfile"
+    facility: "auth,authpriv.*"
+    config:
+      file: "/var/log/secure"
+  mail_logs:
+    type: "omfile"
+    facility: "mail.*"
+    config:
+      file: "-/var/log/maillog"
+  cron_logs:
+    type: "omfile"
+    facility: "cron.*"
+    config:
+      file: "/var/log/cron"
+  emergency_msgs:
+    type: "omusrmsg"
+    facility: "*.emerg"
+    config:
+      users: "*"
+  boot_logs:
+    type: "omfile"
+    facility: "local7.*"
+    config:
+      file: "-/var/log/boot.log"
+# Rsyslog Relay
+profile_rsyslog::relay::relayed_hosts:
+profile_rsyslog::relay::relay_port: "1514"
+profile_rsyslog::relay::config_global:
+  WorkDirectory:
+    value: "/var/lib/rsyslog"
+  preserveFQDN:
+    value: "on"
+  maxMessageSize:
+    value: "64k"
+profile_rsyslog::relay::config_modules:
+  omrelp: {}
+  imrelp: {}
+  imuxsock:
+    config:
+      SysSock.Name: "/run/systemd/journal/syslog"
+  imjournal:
+    config:
+      StateFile: "imjournal.state"
+      IgnorePreviousMessages: "off"
+      Ratelimit.Interval: 600
+      Ratelimit.Burst: 2000
+profile_rsyslog::relay::config_inputs:
+  rsyslog-relay-relp:
+    type: imrelp
+    config:
+      port: "%{alias('profile_rsyslog::relay::relay_port')}"
+profile_rsyslog::relay::config_actions:
+  00-ncsa-security-relp:
+    type: omrelp
+    config:
+      target: "syslog.security.ncsa.illinois.edu"
+      port: "1514"
+      queue.FileName: "syslog-security-buffer"
+      queue.SaveOnShutdown: "on"
+      queue.Type: "LinkedList"
+      queue.size: "1000000"
+      queue.maxdiskspace: "10000000000"
+      queue.syncqueuefiles: "on"
+      Action.ResumeInterval: "30"
+      Action.ResumeRetryCount: "-1"
+      timeout: "5"
+  01-all_logs_local:
+    type: "omfile"
+    facility: "*.info;mail.none;authpriv.none;cron.none"
+    config:
+      file: "/var/log/messages"
+  auth_logs:
+    type: "omfile"
+    facility: "auth,authpriv.*"
+    config:
+      file: "/var/log/secure"
+  mail_logs:
+    type: "omfile"
+    facility: "mail.*"
+    config:
+      file: "-/var/log/maillog"
+  cron_logs:
+    type: "omfile"
+    facility: "cron.*"
+    config:
+      file: "/var/log/cron"
+  emergency_msgs:
+    type: "omusrmsg"
+    facility: "*.emerg"
+    config:
+      users: "*"
+  boot_logs:
+    type: "omfile"
+    facility: "local7.*"
+    config:
+      file: "-/var/log/boot.log"
