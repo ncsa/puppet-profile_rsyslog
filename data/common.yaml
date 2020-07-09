@@ -135,3 +135,6 @@ profile_rsyslog::relay::config_actions:
     facility: "local7.*"
     config:
       file: "-/var/log/boot.log"
+profile_rsyslog::relay::config_templates: {}
+profile_rsyslog::relay::config_rulesets: {}
+profile_rsyslog::relay::config_custom: {}

@@ -17,6 +17,15 @@
 # @param config_actions
 #   A hash of hashes to provide rsyslog actions configuration options
 #
+# @param config_rulesets
+#   A hash of hashes to provide rsyslog rulesets configuration options
+#
+# @param config_templates
+#   A hash of hashes to provide rsyslog templates configuration options
+#
+# @param config_custom
+#   A hash of hashes to provide rsyslog objects that require custom configuration snips
+#
 # @param config_inputs
 #   A hash of hashes to provide rsyslog inputs configuration options
 #
@@ -31,6 +40,9 @@ class profile_rsyslog::relay (
   Hash                       $config_global,
   Hash                       $config_modules,
   Hash                       $config_actions,
+  Hash                       $config_templates,
+  Hash                       $config_rulesets,
+  Hash                       $config_custom,
   Hash                       $config_inputs,
   String                     $relay_port,
   Array[Stdlib::IP::Address] $relayed_hosts,
@@ -47,6 +59,9 @@ class profile_rsyslog::relay (
     modules       => $config_modules,
     actions       => $config_actions,
     inputs        => $config_inputs,
+    templates     => $config_templates,
+    rulesets      => $config_rulesets,
+    custom_config => $config_custom,
   }
 
   # Allow rsyslog forwarding
