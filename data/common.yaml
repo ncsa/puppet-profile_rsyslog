@@ -1,140 +1,156 @@
 ---
-profile_rsyslog::client::syslog_server: "syslog.security.ncsa.illinois.edu"
-profile_rsyslog::client::config_global:
+profile::rsyslog::client::config_actions: {}
+profile::rsyslog::client::config_custom:
+  DefaultRuleset_local_messages:
+    priority: 95
+    content: |
+      $DefaultRuleset local_messages
+profile::rsyslog::client::config_global:
   WorkDirectory:
     value: "/var/lib/rsyslog"
   preserveFQDN:
     value: "on"
   maxMessageSize:
     value: "64k"
-profile_rsyslog::client::config_modules:
+profile::rsyslog::client::config_modules:
   omrelp: {}
+  imklog: {}
   imuxsock:
     config:
-      SysSock.Name: "/run/systemd/journal/syslog"
+      SysSock.Use: "off"
   imjournal:
     config:
       StateFile: "imjournal.state"
       IgnorePreviousMessages: "off"
       Ratelimit.Interval: 600
       Ratelimit.Burst: 2000
-profile_rsyslog::client::config_actions:
-  00-ncsa-security-relp:
-    type: omrelp
-    config:
-      target: "syslog.security.ncsa.illinois.edu"
-      port: "1514"
-      queue.FileName: "syslog-security-buffer"
-      queue.SaveOnShutdown: "on"
-      queue.Type: "LinkedList"
-      queue.size: "1000000"
-      queue.maxdiskspace: "10000000000"
-      queue.syncqueuefiles: "on"
-      Action.ResumeInterval: "30"
-      Action.ResumeRetryCount: "-1"
-      timeout: "5"
-  01-all_logs_local:
-    type: "omfile"
-    facility: "*.info;mail.none;authpriv.none;cron.none"
-    config:
-      file: "/var/log/messages"
-  auth_logs:
-    type: "omfile"
-    facility: "auth,authpriv.*"
-    config:
-      file: "/var/log/secure"
-  mail_logs:
-    type: "omfile"
-    facility: "mail.*"
-    config:
-      file: "-/var/log/maillog"
-  cron_logs:
-    type: "omfile"
-    facility: "cron.*"
-    config:
-      file: "/var/log/cron"
-  emergency_msgs:
-    type: "omusrmsg"
-    facility: "*.emerg"
-    config:
-      users: "*"
-  boot_logs:
-    type: "omfile"
-    facility: "local7.*"
-    config:
-      file: "-/var/log/boot.log"
-# Rsyslog Relay
-profile_rsyslog::relay::relayed_hosts:
-profile_rsyslog::relay::relay_port: "1514"
-profile_rsyslog::relay::config_global:
+  omfile:
+    type: "builtin"
+#    Template: "RSYSLOG_TraditionalFileFormat"
+profile::rsyslog::client::feature_packages:
+  - "rsyslog-relp"
+profile::rsyslog::client::override_default_config: true
+profile::rsyslog::client::purge_config_files: false
+#########
+profile::rsyslog::relay::config_actions: {}
+profile::rsyslog::relay::config_custom:
+  DefaultRuleset_local_messages:
+    priority: 95
+    content: |
+      $DefaultRuleset local_messages
+profile::rsyslog::relay::config_global:
   WorkDirectory:
     value: "/var/lib/rsyslog"
   preserveFQDN:
     value: "on"
   maxMessageSize:
     value: "64k"
-profile_rsyslog::relay::config_modules:
-  omrelp: {}
-  imrelp: {}
-  imuxsock:
+profile::rsyslog::relay::config_inputs:
+  imtcp:
+    type: imtcp
     config:
-      SysSock.Name: "/run/systemd/journal/syslog"
-  imjournal:
+      port: 514
+      Ruleset: local_messages 
+  imudp:
+    type: imudp
     config:
-      StateFile: "imjournal.state"
-      IgnorePreviousMessages: "off"
-      Ratelimit.Interval: 600
-      Ratelimit.Burst: 2000
-profile_rsyslog::relay::config_inputs:
-  rsyslog-relay-relp:
+      port: 514
+      Ruleset: local_messages
+  imrelp:
     type: imrelp
     config:
-      port: "%{alias('profile_rsyslog::relay::relay_port')}"
-profile_rsyslog::relay::config_actions:
-  00-ncsa-security-relp:
-    type: omrelp
+      port: 20515
+      Ruleset: local_messages
+profile::rsyslog::relay::config_modules:
+  omrelp: {}
+  imuxsock:
     config:
-      target: "syslog.security.ncsa.illinois.edu"
-      port: "1514"
-      queue.FileName: "syslog-security-buffer"
-      queue.SaveOnShutdown: "on"
-      queue.Type: "LinkedList"
-      queue.size: "1000000"
-      queue.maxdiskspace: "10000000000"
-      queue.syncqueuefiles: "on"
-      Action.ResumeInterval: "30"
-      Action.ResumeRetryCount: "-1"
-      timeout: "5"
-  01-all_logs_local:
-    type: "omfile"
-    facility: "*.info;mail.none;authpriv.none;cron.none"
+      SysSock.Use: "off"
+  imjournal:
     config:
-      file: "/var/log/messages"
-  auth_logs:
-    type: "omfile"
-    facility: "auth,authpriv.*"
-    config:
-      file: "/var/log/secure"
-  mail_logs:
-    type: "omfile"
-    facility: "mail.*"
-    config:
-      file: "-/var/log/maillog"
-  cron_logs:
-    type: "omfile"
-    facility: "cron.*"
-    config:
-      file: "/var/log/cron"
-  emergency_msgs:
-    type: "omusrmsg"
-    facility: "*.emerg"
-    config:
-      users: "*"
-  boot_logs:
-    type: "omfile"
-    facility: "local7.*"
-    config:
-      file: "-/var/log/boot.log"
-profile_rsyslog::relay::config_templates: {}
-profile_rsyslog::relay::config_rulesets: {}
-profile_rsyslog::relay::config_custom: {}
+      StateFile: "imjournal.state"
+      IgnorePreviousMessages: "off"
+      Ratelimit.Interval: 600
+      Ratelimit.Burst: 2000
+  imtcp: {}
+  imudp: {}
+  imrelp: {}
+  omfile:
+    type: "builtin"
+#    Template: "RSYSLOG_TraditionalFileFormat"
+profile::rsyslog::relay::config_rulesets:
+  local_messages:
+    rules:
+      - action:
+          name: all_local
+          type: omfile
+          facility: "*.info;mail.none;authpriv.none;cron.none"
+          config:
+            file: "/var/log/messages"
+      - action:
+          name: auth_logs
+          type: omfile
+          facility: "auth,authpriv.*"
+          config:
+            file: "/var/log/secure"
+      - action:
+          name: mail_logs
+          type: omfile
+          facility: "mail.*"
+          config:
+            file: "/var/log/maillog"
+      - action:
+          name: cron_logs
+          type: omfile
+          facility: "cron.*"
+          config:
+            file: "/var/log/cronlog"
+      - action:
+          name: emergency_msgs
+          type: omusrmsg
+          facility: "*.emerg"
+          config:
+            users: "*"
+      - action:
+          name: boot_logs
+          type: omfile
+          facility: "local7.*"
+          config:
+            file: "/var/log/boot.log"
+      - action:
+          name: ncsa-security-relp
+          type: omrelp
+          config:
+            target: "syslog.security.ncsa.illinois.edu"
+            port: "1514"
+            queue.FileName: "syslog-security-buffer"
+            queue.SaveOnShutdown: "on"
+            queue.Type: "LinkedList"
+            queue.size: "1000000"
+            queue.maxdiskspace: "10000000000"
+            queue.syncqueuefiles: "on"
+            Action.ResumeInterval: "30"
+            Action.ResumeRetryCount: "-1"
+            timeout: "6"
+#      - action:
+#          name: neteng-logstash
+#          type: omfwd
+#          config:
+#            target: "neteng-logstash-2.ncsa.illinois.edu"
+#            port: "9600"
+#            protocol: "udp"
+profile::rsyslog::relay::config_templates: {}
+profile::rsyslog::relay::feature_packages:
+  - "rsyslog-relp"
+profile::rsyslog::relay::firewall_port_data:
+  tcp-514:
+    port: 514
+    protocol: tcp
+  udp-514:
+    port: 514
+    protocol: udp
+  tcp-20515:
+    port: 20515
+    protocol: tcp
+profile::rsyslog::relay::override_default_config: true
+profile::rsyslog::relay::purge_config_files: false
