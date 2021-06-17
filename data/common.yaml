@@ -66,21 +66,6 @@ profile_rsyslog::client::config_rulesets:
           facility: "local7.*"
           config:
             file: "/var/log/boot.log"
-      - action:
-          name: relay-admin-server-relp
-          type: omrelp
-          config:
-            target: "" 
-            port: "20515"
-            queue.FileName: "adm-buffer"
-            queue.SaveOnShutdown: "on"
-            queue.Type: "LinkedList"
-            queue.size: "1000000"
-            queue.maxdiskspace: "10000000000"
-            queue.syncqueuefiles: "on"
-            Action.ResumeInterval: "30"
-            Action.ResumeRetryCount: "-1"
-            timeout: "6"
 profile_rsyslog::client::feature_packages:
   - "rsyslog-relp"
 profile_rsyslog::client::override_default_config: true
