@@ -1,18 +1,18 @@
 ---
-profile::rsyslog::client::config_actions: {}
-profile::rsyslog::client::config_custom:
+profile_rsyslog::client::config_actions: {}
+profile_rsyslog::client::config_custom:
   DefaultRuleset_local_messages:
     priority: 95
     content: |
       $DefaultRuleset local_messages
-profile::rsyslog::client::config_global:
+profile_rsyslog::client::config_global:
   WorkDirectory:
     value: "/var/lib/rsyslog"
   preserveFQDN:
     value: "on"
   maxMessageSize:
     value: "64k"
-profile::rsyslog::client::config_modules:
+profile_rsyslog::client::config_modules:
   omrelp: {}
   imklog: {}
   imuxsock:
@@ -27,25 +27,25 @@ profile::rsyslog::client::config_modules:
   omfile:
     type: "builtin"
 #    Template: "RSYSLOG_TraditionalFileFormat"
-profile::rsyslog::client::feature_packages:
+profile_rsyslog::client::feature_packages:
   - "rsyslog-relp"
-profile::rsyslog::client::override_default_config: true
-profile::rsyslog::client::purge_config_files: false
+profile_rsyslog::client::override_default_config: true
+profile_rsyslog::client::purge_config_files: false
 #########
-profile::rsyslog::relay::config_actions: {}
-profile::rsyslog::relay::config_custom:
+profile_rsyslog::relay::config_actions: {}
+profile_rsyslog::relay::config_custom:
   DefaultRuleset_local_messages:
     priority: 95
     content: |
       $DefaultRuleset local_messages
-profile::rsyslog::relay::config_global:
+profile_rsyslog::relay::config_global:
   WorkDirectory:
     value: "/var/lib/rsyslog"
   preserveFQDN:
     value: "on"
   maxMessageSize:
     value: "64k"
-profile::rsyslog::relay::config_inputs:
+profile_rsyslog::relay::config_inputs:
   imtcp:
     type: imtcp
     config:
@@ -61,7 +61,7 @@ profile::rsyslog::relay::config_inputs:
     config:
       port: 20515
       Ruleset: local_messages
-profile::rsyslog::relay::config_modules:
+profile_rsyslog::relay::config_modules:
   omrelp: {}
   imuxsock:
     config:
@@ -78,7 +78,7 @@ profile::rsyslog::relay::config_modules:
   omfile:
     type: "builtin"
 #    Template: "RSYSLOG_TraditionalFileFormat"
-profile::rsyslog::relay::config_rulesets:
+profile_rsyslog::relay::config_rulesets:
   local_messages:
     rules:
       - action:
@@ -139,10 +139,10 @@ profile::rsyslog::relay::config_rulesets:
 #            target: "neteng-logstash-2.ncsa.illinois.edu"
 #            port: "9600"
 #            protocol: "udp"
-profile::rsyslog::relay::config_templates: {}
-profile::rsyslog::relay::feature_packages:
+profile_rsyslog::relay::config_templates: {}
+profile_rsyslog::relay::feature_packages:
   - "rsyslog-relp"
-profile::rsyslog::relay::firewall_port_data:
+profile_rsyslog::relay::firewall_port_data:
   tcp-514:
     port: 514
     protocol: tcp
@@ -152,5 +152,5 @@ profile::rsyslog::relay::firewall_port_data:
   tcp-20515:
     port: 20515
     protocol: tcp
-profile::rsyslog::relay::override_default_config: true
-profile::rsyslog::relay::purge_config_files: false
+profile_rsyslog::relay::override_default_config: true
+profile_rsyslog::relay::purge_config_files: false

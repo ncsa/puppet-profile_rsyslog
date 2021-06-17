@@ -4,7 +4,7 @@
 # sending logs to security from machines that are in isolated networks
 #
 # @example
-#   include profile::rsyslog::relay
+#   include profile_rsyslog::relay
 #
 # @see https://forge.puppet.com/puppet/rsyslog
 #
@@ -44,7 +44,7 @@
 # @param purge_config_files
 #   Purge other config file from the include dir (/etc/rsyslog.d/) or not.
 #
-class profile::rsyslog::relay (
+class profile_rsyslog::relay (
   Array[String] $allow_ip_ranges,
   Hash          $config_actions,
   Hash          $config_custom,
@@ -80,7 +80,7 @@ class profile::rsyslog::relay (
     $firewall_port_data.each | $name, $data | {
       $port     = $data[port]
       $protocol = $data[protocol]
-      firewall { "500 profile::rsyslog::relay - allow rsyslog ${name} from ${ip_range}":
+      firewall { "500 profile_rsyslog::relay - allow rsyslog ${name} from ${ip_range}":
         proto  => $protocol,
         dport  => $port,
         action => 'accept',
