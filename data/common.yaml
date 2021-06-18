@@ -177,7 +177,7 @@ profile_rsyslog::relay::config_rulesets:
           name: ncsa-security-relp
           type: omrelp
           config:
-            target: "syslog.security.ncsa.illinois.edu"
+            target: "mlong-test0.internal.ncsa.edu"
             port: "1514"
             queue.FileName: "syslog-security-buffer"
             queue.SaveOnShutdown: "on"
