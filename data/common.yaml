@@ -87,7 +87,7 @@ profile_rsyslog::client::override_default_config: true
 profile_rsyslog::client::purge_config_files: false
 #########
 profile_rsyslog::relay::allow_ip_ranges:
-  - {} 
+  - "141.142.193.171" 
 profile_rsyslog::relay::config_actions: {}
 profile_rsyslog::relay::config_custom:
   DefaultRuleset_local_messages:
