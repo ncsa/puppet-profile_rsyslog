@@ -54,7 +54,7 @@ class profile_rsyslog::relay (
   Hash          $firewall_port_data,
 ) {
 
-  class { 'relay':
+  class { 'rsyslog':
     inputs        => $config_inputs,
     templates     => $config_templates,
   }
