@@ -14,20 +14,20 @@ profile_rsyslog::config_global:
     value: "64k"
 profile_rsyslog::config_inputs:
   imtcp:
-    type: imtcp
+    type: "imtcp"
     config:
       port: 514
-      Ruleset: local_messages
+      Ruleset: "local_messages"
   imudp:
-    type: imudp
+    type: "imudp:"
     config:
       port: 514
-      Ruleset: local_messages
+      Ruleset: "local_messages"
   imrelp:
-    type: imrelp
+    type: "imrelp"
     config:
       port: 20515
-      Ruleset: local_messages
+      Ruleset: "local_messages"
 profile_rsyslog::config_modules:
   omrelp: {}
   imuxsock:
@@ -52,14 +52,14 @@ profile_rsyslog::feature_packages:
 profile_rsyslog::override_default_config: true
 profile_rsyslog::purge_config_files: false
 #########
-profile_rsyslog::relay::allow_ip_ranges: [] 
+profile_rsyslog::relay::allow_ip_ranges: []
 profile_rsyslog::relay::firewall_port_data:
   tcp-514:
     port: 514
-    protocol: tcp
+    protocol: "tcp"
   udp-514:
     port: 514
-    protocol: udp
+    protocol: "udp"
   tcp-20515:
     port: 20515
-    protocol: tcp
+    protocol: "tcp"
