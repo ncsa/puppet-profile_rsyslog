@@ -1,5 +1,8 @@
 # @summary Configures an NCSA rsyslog relay
 #
+# RELAY FUNCTIONALITY IS A WIP
+# USE CAUTION IF DEPLOYING TO PRODUCTION
+#
 # This class configures an NCSA rsyslog relay to facilitate
 # sending logs to security from machines that are in isolated networks
 #
@@ -46,32 +49,13 @@
 #
 class profile_rsyslog::relay (
   Array[String] $allow_ip_ranges,
-  Hash          $config_actions,
-  Hash          $config_custom,
-  Hash          $config_global,
   Hash          $config_inputs,
-  Hash          $config_modules,
-  Hash          $config_rulesets,
   Hash          $config_templates,
-  Array         $feature_packages,
-  Boolean       $override_default_config,
-  Boolean       $purge_config_files,
   Hash          $firewall_port_data,
 ) {
 
-  class { 'rsyslog':
-    feature_packages        => $feature_packages,
-    override_default_config => $override_default_config,
-    purge_config_files      => $purge_config_files,
-  }
-
-  class { 'rsyslog::config':
-    actions       => $config_actions,
-    custom_config => $config_custom,
-    global_config => $config_global,
+  class { 'relay::config':
     inputs        => $config_inputs,
-    modules       => $config_modules,
-    rulesets      => $config_rulesets,
     templates     => $config_templates,
   }
 
