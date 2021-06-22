@@ -12,6 +12,22 @@ profile_rsyslog::config_global:
     value: "on"
   maxMessageSize:
     value: "64k"
+profile_rsyslog::config_inputs:
+  imtcp:
+    type: imtcp
+    config:
+      port: 514
+      Ruleset: local_messages
+  imudp:
+    type: imudp
+    config:
+      port: 514
+      Ruleset: local_messages
+  imrelp:
+    type: imrelp
+    config:
+      port: 20515
+      Ruleset: local_messages
 profile_rsyslog::config_modules:
   omrelp: {}
   imklog: {}
@@ -28,46 +44,13 @@ profile_rsyslog::config_modules:
     type: "builtin"
 #    Template: "RSYSLOG_TraditionalFileFormat"
 profile_rsyslog::config_rulesets: {}
+profile_rsyslog::config_templates: {}
 profile_rsyslog::feature_packages:
   - "rsyslog-relp"
 profile_rsyslog::override_default_config: true
 profile_rsyslog::purge_config_files: false
 #########
 profile_rsyslog::relay::allow_ip_ranges: [] 
-profile_rsyslog::relay::config_inputs:
-  imtcp:
-    type: imtcp
-    config:
-      port: 514
-      Ruleset: local_messages 
-  imudp:
-    type: imudp
-    config:
-      port: 514
-      Ruleset: local_messages
-  imrelp:
-    type: imrelp
-    config:
-      port: 20515
-      Ruleset: local_messages
-profile_rsyslog::relay::config_modules:
-  omrelp: {}
-  imuxsock:
-    config:
-      SysSock.Use: "off"
-  imjournal:
-    config:
-      StateFile: "imjournal.state"
-      IgnorePreviousMessages: "off"
-      Ratelimit.Interval: 600
-      Ratelimit.Burst: 2000
-  imtcp: {}
-  imudp: {}
-  imrelp: {}
-  omfile:
-    type: "builtin"
-#    Template: "RSYSLOG_TraditionalFileFormat"
-profile_rsyslog::relay::config_templates: {}
 profile_rsyslog::relay::firewall_port_data:
   tcp-514:
     port: 514

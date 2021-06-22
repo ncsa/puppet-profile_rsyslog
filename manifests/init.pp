@@ -34,8 +34,10 @@ class profile_rsyslog (
   Hash    $config_actions,
   Hash    $config_custom,
   Hash    $config_global,
+  Hash    $config_inputs,
   Hash    $config_modules,
   Hash    $config_rulesets,
+  Hash    $config_templates,
   Array   $feature_packages,
   Boolean $override_default_config,
   Boolean $purge_config_files,
@@ -50,7 +52,9 @@ class profile_rsyslog (
     actions       => $config_actions,
     custom_config => $config_custom,
     global_config => $config_global,
+    inputs        => $config_inputs,
     modules       => $config_modules,
     rulesets      => $config_rulesets,
+    templates     => $config_templates,
   }
 }

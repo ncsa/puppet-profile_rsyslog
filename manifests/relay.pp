@@ -49,15 +49,8 @@
 #
 class profile_rsyslog::relay (
   Array[String] $allow_ip_ranges,
-  Hash          $config_inputs,
-  Hash          $config_templates,
   Hash          $firewall_port_data,
 ) {
-
-  class { 'rsyslog':
-    inputs        => $config_inputs,
-    templates     => $config_templates,
-  }
 
   # Allow rsyslog forwarding
   $allow_ip_ranges.each | $ip_range | {
