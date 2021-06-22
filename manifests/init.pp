@@ -16,11 +16,17 @@
 # @param config_global
 #   A hash of hashes to provide global configuration options
 #
+# @param config_inputs
+#   A hash of hashes to provide rsyslog inputs configuration options
+#
 # @param config_modules
 #   A hash of hashes to provide rsyslog module configuration options
 #
 # @param config_rulesets
 #   A hash of hashes to provide rsyslog ruleset configuration options
+#
+# @param config_templates
+#   A hash of hashes to provide rsyslog templates configuration options
 #
 # @param feature_packages
 #   An array of extra "feature" packages to install for rsyslog.
@@ -30,6 +36,7 @@
 #
 # @param purge_config_files
 #   Purge other config file from the include dir (/etc/rsyslog.d/) or not.
+#
 class profile_rsyslog (
   Hash    $config_actions,
   Hash    $config_custom,
