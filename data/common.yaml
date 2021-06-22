@@ -45,7 +45,45 @@ profile_rsyslog::config_modules:
   omfile:
     type: "builtin"
 #    Template: "RSYSLOG_TraditionalFileFormat"
-profile_rsyslog::config_rulesets: {}
+profile_rsyslog::config_rulesets:
+  local_messages:
+    rules:
+      - action:
+          name: "01_all_local"
+          type: "omfile"
+          facility: "*.info;mail.none;authpriv.none;cron.none"
+          config:
+            file: "/var/log/messages"
+      - action:
+          name: "02_auth_logs"
+          type: "omfile"
+          facility: "auth,authpriv.*"
+          config:
+            file: "/var/log/secure"
+      - action:
+          name: "03_mail_logs"
+          type: "omfile"
+          facility: "mail.*"
+          config:
+            file: "/var/log/maillog"
+      - action:
+          name: "04_cron_logs"
+          type: "omfile"
+          facility: "cron.*"
+          config:
+            file: "/var/log/cronlog"
+      - action:
+          name: "05_emergency_msgs"
+          type: "omusrmsg"
+          facility: "*.emerg"
+          config:
+            users: "*"
+      - action:
+          name: "06_boot_logs"
+          type: "omfile"
+          facility: "local7.*"
+          config:
+            file: "/var/log/boot.log"
 profile_rsyslog::config_templates: {}
 profile_rsyslog::feature_packages:
   - "rsyslog-relp"
