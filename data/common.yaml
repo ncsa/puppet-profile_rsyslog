@@ -30,7 +30,6 @@ profile_rsyslog::config_inputs:
       Ruleset: local_messages
 profile_rsyslog::config_modules:
   omrelp: {}
-  imklog: {}
   imuxsock:
     config:
       SysSock.Use: "off"
@@ -40,6 +39,9 @@ profile_rsyslog::config_modules:
       IgnorePreviousMessages: "off"
       Ratelimit.Interval: 600
       Ratelimit.Burst: 2000
+  imtcp: {}
+  imudp: {}
+  imrelp: {}
   omfile:
     type: "builtin"
 #    Template: "RSYSLOG_TraditionalFileFormat"
