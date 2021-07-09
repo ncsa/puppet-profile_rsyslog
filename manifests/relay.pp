@@ -31,7 +31,7 @@ class profile_rsyslog::relay (
         proto  => $protocol,
         dport  => $port,
         action => 'accept',
-        source => "${ip_range}",
+        source => $ip_range,
       }
     }
   }
