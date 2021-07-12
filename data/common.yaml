@@ -84,6 +84,21 @@ profile_rsyslog::config_rulesets:
           facility: "local7.*"
           config:
             file: "/var/log/boot.log"
+      - action:
+          name: "syslog-security-relp"
+          type: "omrelp"
+          config:
+            target: "syslog.security.ncsa.illinois.edu"
+            port: "1514"
+            queue.FileName: "syslog-security-buffer"
+            queue.SaveOnShutdown: "on"
+            queue.Type: "LinkedList"
+            queue.size: "1000000"
+            queue.maxdiskspace: "10000000000"
+            queue.syncqueuefiles: "on"
+            Action.ResumeInterval: "30"
+            Action.ResumeRetryCount: "-1"
+            timeout: "6"
 profile_rsyslog::config_templates: {}
 profile_rsyslog::feature_packages:
   - "rsyslog-relp"
