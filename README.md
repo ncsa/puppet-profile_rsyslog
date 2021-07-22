@@ -117,6 +117,22 @@ then forward them to a central log host.
 
 ```
 ---
+profile_rsyslog::config_inputs:
+  imtcp:
+    type: "imtcp"
+    config:
+      port: 514
+      Ruleset: "local_messages"
+  imudp:
+    type: "imudp:"
+    config:
+      port: 514
+      Ruleset: "local_messages"
+  imrelp:
+    type: "imrelp"
+    config:
+      port: 20515
+      Ruleset: "local_messages"
 profile_rsyslog::config_rulesets:
   local_messages:
     rules:
