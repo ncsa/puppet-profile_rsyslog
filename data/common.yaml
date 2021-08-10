@@ -1,10 +1,10 @@
 ---
 profile_rsyslog::config_actions: {}
 profile_rsyslog::config_custom:
-  DefaultRuleset_local_messages:
+  DefaultRuleset_localhost_messages:
     priority: 95
     content: |
-      $DefaultRuleset local_messages
+      $DefaultRuleset localhost_messages
 profile_rsyslog::config_global:
   WorkDirectory:
     value: "/var/lib/rsyslog"
@@ -29,12 +29,11 @@ profile_rsyslog::config_modules:
   imrelp: {}
   omfile:
     type: "builtin"
-#    Template: "RSYSLOG_TraditionalFileFormat"
 profile_rsyslog::config_rulesets:
-  local_messages:
+  localhost_messages:
     rules:
       - action:
-          name: "01_all_local"
+          name: "01_all_generic_message_logs"
           type: "omfile"
           facility: "*.info;mail.none;authpriv.none;cron.none"
           config:
@@ -56,7 +55,7 @@ profile_rsyslog::config_rulesets:
           type: "omfile"
           facility: "cron.*"
           config:
-            file: "/var/log/cronlog"
+            file: "/var/log/cron"
       - action:
           name: "05_emergency_msgs"
           type: "omusrmsg"
@@ -70,12 +69,12 @@ profile_rsyslog::config_rulesets:
           config:
             file: "/var/log/boot.log"
       - action:
-          name: "syslog-security-relp"
+          name: "forward-to-log-collector-server-relp"
           type: "omrelp"
           config:
             target: "syslog.security.ncsa.illinois.edu"
             port: "1514"
-            queue.FileName: "syslog-security-buffer"
+            queue.FileName: "forward-to-log-collector-server-buffer"
             queue.SaveOnShutdown: "on"
             queue.Type: "LinkedList"
             queue.size: "1000000"
@@ -89,9 +88,10 @@ profile_rsyslog::feature_packages:
   - "rsyslog-relp"
 profile_rsyslog::override_default_config: true
 profile_rsyslog::purge_config_files: false
-#########
-profile_rsyslog::relay::allow_ip_ranges: []
-profile_rsyslog::relay::firewall_port_data:
+
+profile_rsyslog::collector::allow_ip_ranges: []
+profile_rsyslog::collector::days_to_retain: 7
+profile_rsyslog::collector::firewall_port_data:
   tcp-514:
     port: 514
     protocol: "tcp"
@@ -101,3 +101,27 @@ profile_rsyslog::relay::firewall_port_data:
   tcp-20515:
     port: 20515
     protocol: "tcp"
+profile_rsyslog::collector::log_dir: "/var/log/loghost"
+profile_rsyslog::collector::logrotate_bin: "/sbin/logrotate"
+profile_rsyslog::collector::logrotate_config_content: |
+  /var/log/loghost/*/*.log
+  {
+      daily
+      rotate 7
+      missingok
+      notifempty
+      compress
+      sharedscripts
+      dateext
+      postrotate
+          /usr/bin/systemctl kill -s HUP rsyslog.service >/dev/null 2>&1 || true
+      endscript
+  }
+profile_rsyslog::collector::logrotate_config_path: "/etc/logrotate.d/loghost"
+profile_rsyslog::collector::logrotate_cron_hour: "0"
+profile_rsyslog::collector::logrotate_cron_minute: "0"
+profile_rsyslog::collector::logrotate_cron_month: "*"
+profile_rsyslog::collector::logrotate_cron_monthday: "*"
+profile_rsyslog::collector::logrotate_cron_weekday: "*"
+profile_rsyslog::collector::prereq_packages:
+  - "logrotate"
