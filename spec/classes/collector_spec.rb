@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'profile_rsyslog::relay' do
+describe 'profile_rsyslog::collector' do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       let(:facts) { os_facts }

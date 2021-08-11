@@ -7,7 +7,7 @@
 ### Classes
 
 * [`profile_rsyslog`](#profile_rsyslog): Configures an rsyslog client
-* [`profile_rsyslog::relay`](#profile_rsyslogrelay): Configures an NCSA rsyslog relay
+* [`profile_rsyslog::collector`](#profile_rsyslogcollector): Configures an NCSA rsyslog collector
 
 ## Classes
 
@@ -101,12 +101,9 @@ Data type: `Boolean`
 
 Purge other config file from the include dir (/etc/rsyslog.d/) or not.
 
-### <a name="profile_rsyslogrelay"></a>`profile_rsyslog::relay`
+### <a name="profile_rsyslogcollector"></a>`profile_rsyslog::collector`
 
-RELAY FUNCTIONALITY IS A WIP
-USE CAUTION IF DEPLOYING TO PRODUCTION
-
-This class configures an NCSA rsyslog relay to facilitate
+This class configures an NCSA rsyslog collector to facilitate
 sending logs to security from machines that are in isolated networks
 
 * **See also**
@@ -117,20 +114,38 @@ sending logs to security from machines that are in isolated networks
 ##### 
 
 ```puppet
-include profile_rsyslog::relay
+include profile_rsyslog::collector
 ```
 
 #### Parameters
 
-The following parameters are available in the `profile_rsyslog::relay` class:
+The following parameters are available in the `profile_rsyslog::collector` class:
 
-* [`allow_ip_ranges,`](#allow_ip_ranges,)
-* [`firewall_port_data`](#firewall_port_data)
 * [`allow_ip_ranges`](#allow_ip_ranges)
+* [`days_to_retain`](#days_to_retain)
+* [`firewall_port_data`](#firewall_port_data)
+* [`log_dir`](#log_dir)
+* [`logrotate_bin`](#logrotate_bin)
+* [`logrotate_config_content`](#logrotate_config_content)
+* [`logrotate_config_path`](#logrotate_config_path)
+* [`logrotate_cron_hour`](#logrotate_cron_hour)
+* [`logrotate_cron_minute`](#logrotate_cron_minute)
+* [`logrotate_cron_month`](#logrotate_cron_month)
+* [`logrotate_cron_monthday`](#logrotate_cron_monthday)
+* [`logrotate_cron_weekday`](#logrotate_cron_weekday)
+* [`prereq_packages`](#prereq_packages)
 
-##### <a name="allow_ip_ranges,"></a>`allow_ip_ranges,`
+##### <a name="allow_ip_ranges"></a>`allow_ip_ranges`
+
+Data type: `Array[String]`
 
 An array of CIDR ranges from which to accept incoming logs.
+
+##### <a name="days_to_retain"></a>`days_to_retain`
+
+Data type: `Integer`
+
+Integer of number of days worth of logs to retain locally.
 
 ##### <a name="firewall_port_data"></a>`firewall_port_data`
 
@@ -138,9 +153,66 @@ Data type: `Hash`
 
 A hash of hashes to provide input on ports to open in the firewall.
 
-##### <a name="allow_ip_ranges"></a>`allow_ip_ranges`
+##### <a name="log_dir"></a>`log_dir`
 
-Data type: `Array[String]`
+Data type: `String`
 
+String of local directory where collected logs are stored
+This directory also needs to match those included in the:
+  $logrotate_config
+  $profile_rsyslog::config_templates
 
+##### <a name="logrotate_bin"></a>`logrotate_bin`
+
+Data type: `String`
+
+String of full path to logrotate binary file
+
+##### <a name="logrotate_config_content"></a>`logrotate_config_content`
+
+Data type: `String`
+
+String of file content for the logrotate config to rotate copy of rotated logs
+
+##### <a name="logrotate_config_path"></a>`logrotate_config_path`
+
+Data type: `String`
+
+String of fule path to the logrotate config to rotate copy of rotated logs
+
+##### <a name="logrotate_cron_hour"></a>`logrotate_cron_hour`
+
+Data type: `String`
+
+String of the hour that the logrotate cron should run for collector logs
+
+##### <a name="logrotate_cron_minute"></a>`logrotate_cron_minute`
+
+Data type: `String`
+
+String of the minute that the logrotate cron should run for collector logs
+
+##### <a name="logrotate_cron_month"></a>`logrotate_cron_month`
+
+Data type: `String`
+
+String of the month that the logrotate cron should run for collector logs
+
+##### <a name="logrotate_cron_monthday"></a>`logrotate_cron_monthday`
+
+Data type: `String`
+
+String of the monthday that the logrotate cron should run for collector logs
+
+##### <a name="logrotate_cron_weekday"></a>`logrotate_cron_weekday`
+
+Data type: `String`
+
+String of the weekday that the logrotate cron should run for collector logs
+
+##### <a name="prereq_packages"></a>`prereq_packages`
+
+Data type: `Array`
+
+Array of prerequisite packages that need to be installed for rsyslog collectors
 
