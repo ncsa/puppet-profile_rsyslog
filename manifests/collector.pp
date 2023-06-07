@@ -65,7 +65,6 @@ class profile_rsyslog::collector (
   String        $logrotate_cron_weekday,
   Array         $prereq_packages,
 ) {
-
   ensure_packages( $prereq_packages )
 
   # Allow rsyslog forwarding
@@ -112,6 +111,4 @@ class profile_rsyslog::collector (
     user    => 'root',
     special => 'daily',
   }
-
-
 }

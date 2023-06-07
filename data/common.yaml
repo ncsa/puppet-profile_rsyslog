@@ -11,7 +11,7 @@ profile_rsyslog::config_global:
   preserveFQDN:
     value: "on"
   maxMessageSize:
-    value: "64k"
+    value: "128k"
 profile_rsyslog::config_inputs: {}
 profile_rsyslog::config_modules:
   omrelp: {}
@@ -22,8 +22,8 @@ profile_rsyslog::config_modules:
     config:
       StateFile: "imjournal.state"
       IgnorePreviousMessages: "off"
-      Ratelimit.Interval: 600
-      Ratelimit.Burst: 2000
+      Ratelimit.Interval: 0
+      Ratelimit.Burst: 0
   imtcp: {}
   imudp: {}
   imrelp: {}
@@ -35,7 +35,7 @@ profile_rsyslog::config_rulesets:
       - action:
           name: "01_all_generic_message_logs"
           type: "omfile"
-          facility: "*.info;mail.none;authpriv.none;cron.none"
+          facility: "*.info;mail.none;authpriv.none;cron.none;local1.*"
           config:
             file: "/var/log/messages"
       - action:
@@ -78,7 +78,7 @@ profile_rsyslog::config_rulesets:
             queue.SaveOnShutdown: "on"
             queue.Type: "LinkedList"
             queue.size: "1000000"
-            queue.maxdiskspace: "10000000000"
+            queue.maxdiskspace: "1g"
             queue.syncqueuefiles: "on"
             Action.ResumeInterval: "30"
             Action.ResumeRetryCount: "-1"
