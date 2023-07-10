@@ -64,4 +64,7 @@ class profile_rsyslog (
     rulesets      => $config_rulesets,
     templates     => $config_templates,
   }
+
+  # include systemd class to manage systemd journald settings
+  include systemd
 }

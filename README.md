@@ -44,7 +44,7 @@ include ::profile_rsyslog
 The most important setup here is the `forward-to-log-collector-server-relp`,
 which tells rsyslog where to actually send logs.
 
-```
+```yaml
 ---
 profile_rsyslog::config_rulesets:
   localhost_messages:
@@ -108,7 +108,7 @@ profile_rsyslog::config_rulesets:
 include ::profile_rsyslog::collector
 ```
 
-### Hiera data example
+#### Hiera data example
 
 Note several differences:
 * different target host to send logs
@@ -120,7 +120,7 @@ collected logs
 the collector host to accept incoming logs from 172.0.0.0/24 and
 then forward them to a central log host.
 
-```
+```yaml
 ---
 profile_rsyslog::config_inputs:
   imtcp:
@@ -232,3 +232,15 @@ profile_rsyslog::collector::allow_ip_ranges:
   - "172.0.0.0/24"
 ```
 
+### Management of systemd journald
+
+It is recommended to manage systemd journald settings, in particular to turn off rate limiting. Please see [https://github.com/ncsa/control-repo/](https://github.com/ncsa/control-repo/) for current NCSA defaults.
+
+#### Hiera data example
+```yaml
+---
+# disable systemd journald rate-limiting
+systemd::journald_settings:
+  RateLimitBurst: 0
+  RateLimitIntervalSec: "0s"
+```
