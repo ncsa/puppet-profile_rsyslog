@@ -111,4 +111,12 @@ class profile_rsyslog::collector (
     user    => 'root',
     special => 'daily',
   }
+
+  if ( lookup('profile_backup::client::enabled') ) {
+    include profile_backup::client
+
+    profile_backup::client::add_job { 'rsyslog_collector':
+      paths            => $log_dir,
+    }
+  }
 }
