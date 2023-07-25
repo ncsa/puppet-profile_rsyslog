@@ -116,7 +116,7 @@ class profile_rsyslog::collector (
     include profile_backup::client
 
     profile_backup::client::add_job { 'rsyslog_collector':
-      paths            => $log_dir,
+      paths            => [$log_dir,],
     }
   }
 }
