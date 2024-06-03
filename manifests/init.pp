@@ -49,6 +49,13 @@ class profile_rsyslog (
   Boolean $override_default_config,
   Boolean $purge_config_files,
 ) {
+  file { '/var/lib/rsyslog':
+    ensure => 'directory',
+    mode   => '0700',
+    owner  => 'root',
+    group  => 'root',
+  }
+
   class { 'rsyslog':
     feature_packages        => $feature_packages,
     override_default_config => $override_default_config,
@@ -63,6 +70,7 @@ class profile_rsyslog (
     modules       => $config_modules,
     rulesets      => $config_rulesets,
     templates     => $config_templates,
+    require       => File['/var/lib/rsyslog'],
   }
 
   # include systemd class to manage systemd journald settings
