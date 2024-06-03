@@ -7,7 +7,7 @@
 ### Classes
 
 * [`profile_rsyslog`](#profile_rsyslog): Configures an rsyslog client
-* [`profile_rsyslog::collector`](#profile_rsyslogcollector): Configures an NCSA rsyslog collector
+* [`profile_rsyslog::collector`](#profile_rsyslog--collector): Configures an NCSA rsyslog collector
 
 ## Classes
 
@@ -30,78 +30,78 @@ include profile_rsyslog
 
 The following parameters are available in the `profile_rsyslog` class:
 
-* [`config_actions`](#config_actions)
-* [`config_custom`](#config_custom)
-* [`config_global`](#config_global)
-* [`config_inputs`](#config_inputs)
-* [`config_modules`](#config_modules)
-* [`config_rulesets`](#config_rulesets)
-* [`config_templates`](#config_templates)
-* [`feature_packages`](#feature_packages)
-* [`override_default_config`](#override_default_config)
-* [`purge_config_files`](#purge_config_files)
+* [`config_actions`](#-profile_rsyslog--config_actions)
+* [`config_custom`](#-profile_rsyslog--config_custom)
+* [`config_global`](#-profile_rsyslog--config_global)
+* [`config_inputs`](#-profile_rsyslog--config_inputs)
+* [`config_modules`](#-profile_rsyslog--config_modules)
+* [`config_rulesets`](#-profile_rsyslog--config_rulesets)
+* [`config_templates`](#-profile_rsyslog--config_templates)
+* [`feature_packages`](#-profile_rsyslog--feature_packages)
+* [`override_default_config`](#-profile_rsyslog--override_default_config)
+* [`purge_config_files`](#-profile_rsyslog--purge_config_files)
 
-##### <a name="config_actions"></a>`config_actions`
+##### <a name="-profile_rsyslog--config_actions"></a>`config_actions`
 
 Data type: `Hash`
 
 A hash of hashes to provide rsyslog actions configuration options
 
-##### <a name="config_custom"></a>`config_custom`
+##### <a name="-profile_rsyslog--config_custom"></a>`config_custom`
 
 Data type: `Hash`
 
 A hash of hashes to provide rsyslog objects that require custom configuration snips
 
-##### <a name="config_global"></a>`config_global`
+##### <a name="-profile_rsyslog--config_global"></a>`config_global`
 
 Data type: `Hash`
 
 A hash of hashes to provide global configuration options
 
-##### <a name="config_inputs"></a>`config_inputs`
+##### <a name="-profile_rsyslog--config_inputs"></a>`config_inputs`
 
 Data type: `Hash`
 
 A hash of hashes to provide rsyslog inputs configuration options
 
-##### <a name="config_modules"></a>`config_modules`
+##### <a name="-profile_rsyslog--config_modules"></a>`config_modules`
 
 Data type: `Hash`
 
 A hash of hashes to provide rsyslog module configuration options
 
-##### <a name="config_rulesets"></a>`config_rulesets`
+##### <a name="-profile_rsyslog--config_rulesets"></a>`config_rulesets`
 
 Data type: `Hash`
 
 A hash of hashes to provide rsyslog ruleset configuration options
 
-##### <a name="config_templates"></a>`config_templates`
+##### <a name="-profile_rsyslog--config_templates"></a>`config_templates`
 
 Data type: `Hash`
 
 A hash of hashes to provide rsyslog templates configuration options
 
-##### <a name="feature_packages"></a>`feature_packages`
+##### <a name="-profile_rsyslog--feature_packages"></a>`feature_packages`
 
 Data type: `Array`
 
 An array of extra "feature" packages to install for rsyslog.
 
-##### <a name="override_default_config"></a>`override_default_config`
+##### <a name="-profile_rsyslog--override_default_config"></a>`override_default_config`
 
 Data type: `Boolean`
 
 Override the content of the default config file or not?
 
-##### <a name="purge_config_files"></a>`purge_config_files`
+##### <a name="-profile_rsyslog--purge_config_files"></a>`purge_config_files`
 
 Data type: `Boolean`
 
 Purge other config file from the include dir (/etc/rsyslog.d/) or not.
 
-### <a name="profile_rsyslogcollector"></a>`profile_rsyslog::collector`
+### <a name="profile_rsyslog--collector"></a>`profile_rsyslog::collector`
 
 This class configures an NCSA rsyslog collector to facilitate
 sending logs to security from machines that are in isolated networks
@@ -121,39 +121,39 @@ include profile_rsyslog::collector
 
 The following parameters are available in the `profile_rsyslog::collector` class:
 
-* [`allow_ip_ranges`](#allow_ip_ranges)
-* [`days_to_retain`](#days_to_retain)
-* [`firewall_port_data`](#firewall_port_data)
-* [`log_dir`](#log_dir)
-* [`logrotate_bin`](#logrotate_bin)
-* [`logrotate_config_content`](#logrotate_config_content)
-* [`logrotate_config_path`](#logrotate_config_path)
-* [`logrotate_cron_hour`](#logrotate_cron_hour)
-* [`logrotate_cron_minute`](#logrotate_cron_minute)
-* [`logrotate_cron_month`](#logrotate_cron_month)
-* [`logrotate_cron_monthday`](#logrotate_cron_monthday)
-* [`logrotate_cron_weekday`](#logrotate_cron_weekday)
-* [`prereq_packages`](#prereq_packages)
+* [`allow_ip_ranges`](#-profile_rsyslog--collector--allow_ip_ranges)
+* [`days_to_retain`](#-profile_rsyslog--collector--days_to_retain)
+* [`firewall_port_data`](#-profile_rsyslog--collector--firewall_port_data)
+* [`log_dir`](#-profile_rsyslog--collector--log_dir)
+* [`logrotate_bin`](#-profile_rsyslog--collector--logrotate_bin)
+* [`logrotate_config_content`](#-profile_rsyslog--collector--logrotate_config_content)
+* [`logrotate_config_path`](#-profile_rsyslog--collector--logrotate_config_path)
+* [`logrotate_cron_hour`](#-profile_rsyslog--collector--logrotate_cron_hour)
+* [`logrotate_cron_minute`](#-profile_rsyslog--collector--logrotate_cron_minute)
+* [`logrotate_cron_month`](#-profile_rsyslog--collector--logrotate_cron_month)
+* [`logrotate_cron_monthday`](#-profile_rsyslog--collector--logrotate_cron_monthday)
+* [`logrotate_cron_weekday`](#-profile_rsyslog--collector--logrotate_cron_weekday)
+* [`prereq_packages`](#-profile_rsyslog--collector--prereq_packages)
 
-##### <a name="allow_ip_ranges"></a>`allow_ip_ranges`
+##### <a name="-profile_rsyslog--collector--allow_ip_ranges"></a>`allow_ip_ranges`
 
 Data type: `Array[String]`
 
 An array of CIDR ranges from which to accept incoming logs.
 
-##### <a name="days_to_retain"></a>`days_to_retain`
+##### <a name="-profile_rsyslog--collector--days_to_retain"></a>`days_to_retain`
 
 Data type: `Integer`
 
 Integer of number of days worth of logs to retain locally.
 
-##### <a name="firewall_port_data"></a>`firewall_port_data`
+##### <a name="-profile_rsyslog--collector--firewall_port_data"></a>`firewall_port_data`
 
 Data type: `Hash`
 
 A hash of hashes to provide input on ports to open in the firewall.
 
-##### <a name="log_dir"></a>`log_dir`
+##### <a name="-profile_rsyslog--collector--log_dir"></a>`log_dir`
 
 Data type: `String`
 
@@ -162,55 +162,55 @@ This directory also needs to match those included in the:
   $logrotate_config
   $profile_rsyslog::config_templates
 
-##### <a name="logrotate_bin"></a>`logrotate_bin`
+##### <a name="-profile_rsyslog--collector--logrotate_bin"></a>`logrotate_bin`
 
 Data type: `String`
 
 String of full path to logrotate binary file
 
-##### <a name="logrotate_config_content"></a>`logrotate_config_content`
+##### <a name="-profile_rsyslog--collector--logrotate_config_content"></a>`logrotate_config_content`
 
 Data type: `String`
 
 String of file content for the logrotate config to rotate copy of rotated logs
 
-##### <a name="logrotate_config_path"></a>`logrotate_config_path`
+##### <a name="-profile_rsyslog--collector--logrotate_config_path"></a>`logrotate_config_path`
 
 Data type: `String`
 
 String of fule path to the logrotate config to rotate copy of rotated logs
 
-##### <a name="logrotate_cron_hour"></a>`logrotate_cron_hour`
+##### <a name="-profile_rsyslog--collector--logrotate_cron_hour"></a>`logrotate_cron_hour`
 
 Data type: `String`
 
 String of the hour that the logrotate cron should run for collector logs
 
-##### <a name="logrotate_cron_minute"></a>`logrotate_cron_minute`
+##### <a name="-profile_rsyslog--collector--logrotate_cron_minute"></a>`logrotate_cron_minute`
 
 Data type: `String`
 
 String of the minute that the logrotate cron should run for collector logs
 
-##### <a name="logrotate_cron_month"></a>`logrotate_cron_month`
+##### <a name="-profile_rsyslog--collector--logrotate_cron_month"></a>`logrotate_cron_month`
 
 Data type: `String`
 
 String of the month that the logrotate cron should run for collector logs
 
-##### <a name="logrotate_cron_monthday"></a>`logrotate_cron_monthday`
+##### <a name="-profile_rsyslog--collector--logrotate_cron_monthday"></a>`logrotate_cron_monthday`
 
 Data type: `String`
 
 String of the monthday that the logrotate cron should run for collector logs
 
-##### <a name="logrotate_cron_weekday"></a>`logrotate_cron_weekday`
+##### <a name="-profile_rsyslog--collector--logrotate_cron_weekday"></a>`logrotate_cron_weekday`
 
 Data type: `String`
 
 String of the weekday that the logrotate cron should run for collector logs
 
-##### <a name="prereq_packages"></a>`prereq_packages`
+##### <a name="-profile_rsyslog--collector--prereq_packages"></a>`prereq_packages`
 
 Data type: `Array`
 

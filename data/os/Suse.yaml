@@ -1,0 +1,5 @@
+---
+profile_rsyslog::feature_packages:
+  - "rsyslog-module-gtls"
+  - "rsyslog-module-mmnormalize"
+  - "rsyslog-module-relp"

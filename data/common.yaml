@@ -84,8 +84,6 @@ profile_rsyslog::config_rulesets:
             Action.ResumeRetryCount: "-1"
             timeout: "6"
 profile_rsyslog::config_templates: {}
-profile_rsyslog::feature_packages:
-  - "rsyslog-relp"
 profile_rsyslog::override_default_config: true
 profile_rsyslog::purge_config_files: false
 

@@ -1,0 +1,3 @@
+---
+profile_rsyslog::feature_packages:
+  - "rsyslog-relp"
